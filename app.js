@@ -4,11 +4,12 @@ const mongoose = require("mongoose")
 const morgan = require("morgan")
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
+const expressValidator = require("express-validator");
 
 dotenv.config()
 
 // db connection
-mongoose.connect(process.env.MONGO_URI, {useNewUrlParser:true}).then(()=> console.log("DB connected"))
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser:true}).then(() => console.log("DB connected"))
 mongoose.connection.on('error', err=>{
     console.log(`Db connection error: ${err.message}`);
 });
@@ -30,7 +31,8 @@ app.use(morgan('dev'));
 // app.use(myOwnMiddleware);
 app.use(express.json())
 app.use(bodyParser.json());
-app.use(postRoutes);
+app.use(expressValidator())
+app.use('/',postRoutes);
 
 app.listen(port, ()=>{
     console.log(`server listening to port ${port}`)

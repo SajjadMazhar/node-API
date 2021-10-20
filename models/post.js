@@ -3,14 +3,14 @@ const mongoose = require("mongoose")
 const postSchema = new mongoose.Schema({
   title:{
     type:String,
-    requred:"Title is requred", minlength: 4, maxlength:100
+    requred:true
   },
   body:{
     type:String,
-    required:"Body is required",
-    minlength:4,
-    maxlength:2000
+    required:true,
   }
 });
 
-module.exports = postSchema;
+const Post = mongoose.model('post', postSchema)
+
+module.exports = Post;
